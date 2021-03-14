@@ -33,12 +33,10 @@ export default class App extends React.Component {
 
         </View>
 
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity>
-          <Text style={styles.loginText}>Signup</Text>
+
+        <TouchableOpacity style={styles.loginBtn}>
+          <Text style={styles.loginText}>Register</Text>
         </TouchableOpacity>
 
       </View>

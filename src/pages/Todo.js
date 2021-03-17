@@ -127,6 +127,24 @@ export default function App() {
         </Text>
 
       </View>
+    
+      <View style = {{
+        paddingHorizontal:16,
+        paddingVertical:6,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        backgroundColor: colors.tint,
+        borderRadius: 20,
+        marginVertical: 20, 
+        allignItems: "center"
+      }}>
+
+        <MaterialCommunityIcons
+          name = "magnify"//
+          size = {30}
+          style = {{color: colors.white}} />
+
+      </View>
       
       <View style={{ 
         padding: 20, 

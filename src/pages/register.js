@@ -1,41 +1,60 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
-export default class App extends React.Component {
-  state={
-    email:"",
-    password:""
+class RegisterScreen extends React.Component {
+ 
+    state = {
+      username: '',
+      password: ''
+    }
+  
+  register() {
+    const user = this.state.username;
+    const password = this.state.password;
+
+    const jsonRegister = {
+      username: user,
+      password: password
+    } 
+
+    fetch('http://localhost:3000/user', {
+      method: "POST",
+      body: JSON.stringify(jsonRegister),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).then(response => response.text())
+      .catch(error => console.log(`Server Error${error}`))
+      .then(token => console.log(token))
+    
   }
+
   render(){
     return (
       <View style={styles.container}>
+       
+        <Text style={styles.logo}>F-Reminder</Text>
       
-        <Text style={styles.logo}>F-List</Text>
-        
         <View style={styles.inputView} >
-          
           <TextInput  
             style={styles.inputText}
-            placeholder="Email..." 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({email:text})}/>
-
+            placeholder="Username" 
+            placeholderTextColor="#fff"
+            onChangeText={username => this.setState({username})}
+            value = {this.state.username}/>
         </View>
 
         <View style={styles.inputView} >
-         
           <TextInput  
             secureTextEntry
             style={styles.inputText}
-            placeholder="Password..." 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({password:text})}/>
-
+            placeholder="Password" 
+            placeholderTextColor="#fff"
+            onChangeText={password => this.setState({password})}
+            value = {this.state.password}/>
         </View>
 
-
-
-        <TouchableOpacity style={styles.loginBtn}>
+        <TouchableOpacity style={styles.loginBtn} onPress = {this.register.bind(this)}>
           <Text style={styles.loginText}>Register</Text>
         </TouchableOpacity>
 
@@ -43,6 +62,8 @@ export default class App extends React.Component {
     );
   }
 }
+
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -59,7 +80,7 @@ const styles = StyleSheet.create({
   },
   inputView:{
     width:"80%",
-    backgroundColor:"#fff",
+    backgroundColor:"#465881",
     borderRadius:25,
     height:50,
     marginBottom:20,
@@ -76,7 +97,7 @@ const styles = StyleSheet.create({
   },
   loginBtn:{
     width:"80%",
-    backgroundColor:"#fb5b5a",
+    backgroundColor:"#029fff",
     borderRadius:25,
     height:50,
     alignItems:"center",

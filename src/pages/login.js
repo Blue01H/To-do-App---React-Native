@@ -1,57 +1,85 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
-export default class App extends React.Component {
-  state={
-    email:"",
-    password:""
+class LoginScreen extends React.Component {
+ 
+    state = {
+      username: '',
+      password: ''
+    }
+  
+  signIn() {
+    const user = this.state.username;
+    const password = this.state.password;
+
+    const jsonSignIn = {
+      username: user,
+      password: password
+    } 
+
+    fetch('http://localhost:3000/login', {
+      method: "POST",
+      body: JSON.stringify(jsonSignIn),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).then(response => response.text())
+      .catch(error => console.log(`Server Error${error}`))
+      .then(token => console.log(token))
+    
   }
+
   render(){
     return (
       <View style={styles.container}>
-        <Text style={styles.logo}>HeyAPP</Text>
+       
+        <Text style={styles.logo}>F-Reminder</Text>
+      
         <View style={styles.inputView} >
           <TextInput  
             style={styles.inputText}
-            placeholder="Email..." 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({email:text})}/>
+            placeholder="Username" 
+            placeholderTextColor="#fff"
+            onChangeText={username => this.setState({username})}
+            value = {this.state.username}/>
         </View>
+
         <View style={styles.inputView} >
           <TextInput  
             secureTextEntry
             style={styles.inputText}
-            placeholder="Password..." 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({password:text})}/>
+            placeholder="Password" 
+            placeholderTextColor="#fff"
+            onChangeText={password => this.setState({password})}
+            value = {this.state.password}/>
         </View>
-        <TouchableOpacity>
-          <Text style={styles.forgot}>Forgot Password?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.loginText}>LOGIN</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.loginText}>Signup</Text>
+
+        <TouchableOpacity style={styles.loginBtn} onPress = {this.signIn.bind(this)}>
+          <Text style={styles.loginText}>Sign In</Text>
         </TouchableOpacity>
 
-  
+        <TouchableOpacity>
+          <Text style={styles.loginText}>Register</Text>
+        </TouchableOpacity>
+
       </View>
     );
   }
 }
 
+export default LoginScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003f5c',
+    backgroundColor: '#006aff',
     alignItems: 'center',
     justifyContent: 'center',
   },
   logo:{
     fontWeight:"bold",
     fontSize:50,
-    color:"#fb5b5a",
+    color:"#fff",
     marginBottom:40
   },
   inputView:{
@@ -73,7 +101,7 @@ const styles = StyleSheet.create({
   },
   loginBtn:{
     width:"80%",
-    backgroundColor:"#fb5b5a",
+    backgroundColor:"#029fff",
     borderRadius:25,
     height:50,
     alignItems:"center",
